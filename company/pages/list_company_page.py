@@ -46,7 +46,7 @@ class DropdownList(Component):
 
 class Paginator(Component):
     CURRENT_PAGE = 'span.paging__link.paging__link_active'
-    PAGINATOR_TIMEOUT = 5
+    PAGINATOR_TIMEOUT = 30
     ARROW_NEXT = 'a.paging__link.paging__link_nav.paging__link_nav_next'
     ARROW_PREV = 'a.paging__link.paging__link_nav.paging__link_nav_prev'
     LAST_PAGE = 'a.paging__link.paging__link_last'

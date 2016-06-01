@@ -3,6 +3,9 @@ __author__ = 'alla'
 from selenium.webdriver.support.ui import WebDriverWait
 from urlparse import urljoin
 from selenium.webdriver.support.expected_conditions import staleness_of
+from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.common.by import By
+
 
 from drugs.auth import TEST_USER_PASSWORD, TEST_USERNAME
 
@@ -14,7 +17,7 @@ class Page:
     PASSWORD_NAME = 'Password'
     LOGIN_BUTTON = '//button[@data-uniqid="toolkit-4"]'
     TITLE = 'h1.page-info__title'
-    PAGE_TIMEOUT = 30
+    PAGE_TIMEOUT = 50
 
     def __init__(self, driver):
         self.driver = driver
@@ -31,7 +34,8 @@ class Page:
 
     def login(self):
         self.open_form()
-        self.driver.switch_to.frame(self.driver.find_element_by_tag_name("iframe"))
+       # self.driver.switch_to.frame(self.driver.find_element_by_tag_name("iframe"))
+        self.driver.switch_to.frame(self.driver.find_element_by_css_selector("iframe.ag-popup__frame__layout__iframe"))
         self.set_login()
         self.set_password()
         self.submit()
@@ -41,6 +45,9 @@ class Page:
         self.driver.find_element_by_id(self.AUTH_BUTTON).click()
 
     def set_login(self):
+        WebDriverWait(self.driver, 50).until(
+            expected_conditions.presence_of_element_located((By.NAME, self.LOGIN_NAME))
+        )
         self.driver.find_element_by_name(self.LOGIN_NAME).send_keys(TEST_USERNAME)
 
     def set_password(self):
@@ -56,7 +63,7 @@ class Page:
         return self.driver.find_element_by_css_selector(self.TITLE).text
 
 class Component(object):
-    TIMEOUT = 10
+    TIMEOUT = 50
     def __init__(self, driver):
         self.driver = driver
 

@@ -54,7 +54,7 @@ class Common(object):
 
     def wait_for_another_page(self):
         old_page = self.driver.find_element_by_tag_name('html')
-        WebDriverWait(self.driver, 15).until(EC.staleness_of(old_page))
+        WebDriverWait(self.driver, 40).until(EC.staleness_of(old_page))
 
 class Component(Common):
     def __init__(self, driver):
@@ -75,7 +75,7 @@ class LoginForm(Component):
         
     def submit(self):
         self.driver.find_element_by_css_selector(self.SUBMIT).click()
-                   
+
 class Page(Common):
     BASE_URL = 'https://health.mail.ru/consultation/'
     PATH = ''
